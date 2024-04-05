@@ -1,0 +1,34 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: The environment to deploy the app to
+        type: choice
+        required: true
+        options:
+          - DEV
+          - INT01
+          - INT02
+          - PRE-PROD
+          - PROD
+        default: DEV
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build
+        run: echo 'Sample build'
+      - name: Run unit tests
+        run: echo 'Sample test'
+
+  deploy:
+    name: Deploy to environment
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        run: echo 'Sample deployment'
