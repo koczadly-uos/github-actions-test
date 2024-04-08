@@ -22,7 +22,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          path: ${{ GITHUB_WORKSPACE }}/test.txt
+          path: test.txt
   
   deploy-dev:
     name: Deploy to Dev
@@ -32,6 +32,10 @@ jobs:
     steps:
       - name: Deploy
         run: echo 'Sample deployment to DEVELOPMENT env'
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+      - name: Output
+        run: cat test.txt
 
   deploy-prod:
     name: Deploy to Production
