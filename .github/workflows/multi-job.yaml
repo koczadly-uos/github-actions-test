@@ -1,0 +1,27 @@
+name: Multi-job artifact test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  source:
+    name: Source
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create file
+        run: touch test.txt && echo "Test content" > test.txt
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          path: test.txt
+  
+  sink:
+    name: Sink
+    needs: [source]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        id: dl-artifact
+        uses: actions/download-artifact@v4
+      - name: Print output
+        run: cat ${{ steps.dl-artifact.outputs.download-path }}/test.txt
