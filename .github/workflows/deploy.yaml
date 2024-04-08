@@ -17,24 +17,19 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - name: Create file
-        run: touch test.txt && echo "Test content" > test.txt
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          path: test.txt
+      - name: Compile project
+        run: echo Example compilation...
+      - name: Run tests
+        run: echo Example unit tests...
   
   deploy-dev:
-    name: Deploy to Dev
+    name: Deploy to Development
     needs: [build]
     if: ${{ github.event.inputs.environment == 'DEV'}}
     runs-on: ubuntu-latest
     steps:
-      - name: Download artifact
-        id: dl-artifact
-        uses: actions/download-artifact@v4
-      - name: Output
-        run: cat ${{ steps.dl-artifact.outputs.download-path }}/test.txt
+      - name: Deploy
+        run: echo 'Sample deployment to DEVELOPMENT env'
 
   deploy-prod:
     name: Deploy to Production
